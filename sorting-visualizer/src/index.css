@@ -1,0 +1,38 @@
+.welcome{
+	color:#00008B;
+	font-size: 35px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	text-align:center;
+	background-color: #f2f2f2;
+}
+
+.SortButton{
+	margin-left: 5px;
+	margin-right: 5px;
+	background: #0000;
+	border: 3px solid #999;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	width: 175px;
+	background-color: #008CBA;
+	color: white;
+}
+
+.sort-types{
+	left: 25%;
+	position:absolute;
+}
+
+.bar1{
+	width: 28px;
+}
+
+.all-bars{
+	margin-top: 15px;
+	position: absolute;
+	left:22%;
+}
+
+* {background-color: #f2f2f2}

@@ -1,1 +1,4 @@
-Sorting Visualizer in REACT
+Sorting Visualizer in REACT:
+
+Welcome to my sorting visualizer in React
+
