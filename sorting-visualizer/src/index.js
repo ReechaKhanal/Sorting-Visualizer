@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import './index.css';
 import React, { useState, useEffect } from "react";
+import { performInsertionSort } from "./insertionSort.js"
 
 class SortButton extends React.Component{
 	render(){
@@ -65,34 +66,17 @@ class EverythingGrid extends React.Component {
 	
 	renderInsertionSort(output_array){
 
-		const toBeSorted = this.state.array.slice();
-		var updatedState = output_array;
-		
-		var i = 1;
-		for (i=1; i < toBeSorted.length; i++) {
+		var insertionOutput = performInsertionSort(this.state.array.slice());
+		var updatedState = [], tempArray = [];
+
+		for (var i=0; i< insertionOutput.length; i++){
 			
-			var previous = i-1, current = i;
-
-			while (previous >= 0 && (toBeSorted[current] < toBeSorted[previous])){
-				
-				var a = toBeSorted[current], b = toBeSorted[previous];
-
-				toBeSorted[current] = b;
-				toBeSorted[previous] = a;
-				
-				current = current-1;
-				previous = previous-1;
-
-				var test = [];
-				var k = 0;
-
-				for (k=0; k<toBeSorted.length; k++){
-					var j = toBeSorted[k]*30;
-					test.push(this.renderBar(j))
-				}
-
-				updatedState.push(test);
+			tempArray = [];
+			for (var j=0; j< (insertionOutput[i]).length; j++){
+				tempArray.push(this.renderBar(insertionOutput[i][j] * 30));	
 			}
+
+			updatedState.push(tempArray);
 		}
 		return updatedState;
 	}
