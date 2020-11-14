@@ -1,7 +1,9 @@
 import ReactDOM from 'react-dom';
 import './index.css';
 import React, { useState, useEffect } from "react";
-import { performInsertionSort } from "./insertionSort.js"
+import { performInsertionSort } from "./insertionSort.js";
+import { performMergeSort } from "./mergeSort.js";
+import { performHeapSort } from "./heapSort.js";
 
 class SortButton extends React.Component{
 	render(){
@@ -64,171 +66,49 @@ class EverythingGrid extends React.Component {
 		};
 	}
 	
-	renderInsertionSort(output_array){
+	renderInsertionSort(){
 
 		var insertionOutput = performInsertionSort(this.state.array.slice());
 		var updatedState = [], tempArray = [];
 
-		for (var i=0; i< insertionOutput.length; i++){
-			
+		for (var i=0; i< insertionOutput.length; i++){	
 			tempArray = [];
 			for (var j=0; j< (insertionOutput[i]).length; j++){
 				tempArray.push(this.renderBar(insertionOutput[i][j] * 30));	
 			}
+			updatedState.push(tempArray);
+		}
+		return updatedState;
+	}
+	
+	renderMergeSort(output_array){
+		
+		var toBeSorted = this.state.array.slice();
+		var mergeOutput = performMergeSort(toBeSorted);
+		var updatedState = [], tempArray = [];
 
+		for (var i=0; i< mergeOutput.length; i++){	
+			tempArray = [];
+			for (var j=0; j< (mergeOutput[i]).length; j++){
+				tempArray.push(this.renderBar(mergeOutput[i][j] * 30));	
+			}
 			updatedState.push(tempArray);
 		}
 		return updatedState;
 	}
 
-	merge_sort_helper(updatedState, toBeSorted, temp, left, mid, right){
-		
-		var leftStart = left, leftEnd = mid, rightStart = mid+1, rightEnd = right;
-		var array_size = rightEnd - leftStart + 1;
-		var index = leftStart;
-
-		while ((leftStart <= leftEnd) && (rightStart <= rightEnd)){
-
-			if (toBeSorted[leftStart] <= toBeSorted[rightStart]){
-				
-				temp[index] = toBeSorted[leftStart];
-				leftStart = leftStart + 1;
-			}
-			else{
-				temp[index] = toBeSorted[rightStart];
-				rightStart = rightStart + 1;
-			}
-			index = index + 1
-		}
-
-		while (leftStart <= leftEnd){
-			temp[index] = toBeSorted[leftStart];
-			index = index + 1;
-			leftStart = leftStart + 1;
-		}
-		while (rightStart <= rightEnd){
-			temp[index] = toBeSorted[rightStart];
-			index = index + 1;
-			rightStart = rightStart + 1;
-		}
-		
-		var i = left;
-		for (i = left; i <= right; i++){
-			toBeSorted[i] = temp[i]
-		}
-
-		var test = [];
-		var k = 0;
-				
-		for (k=0; k<toBeSorted.length; k++){
-			var j = toBeSorted[k]*30;
-			test.push(this.renderBar(j))
-		}
-		updatedState.push(test);
-
-		return [updatedState, toBeSorted];
-	}
-
-	merge_sort(updatedState, toBeSorted, temp, left, right){
-		if (( (left >= 0) && (right < toBeSorted.length) )  && (left < right)){
-
-			var mid = Math.floor((left+right)/2);
-
-			var output = this.merge_sort(updatedState, toBeSorted, temp, left, mid);
-			updatedState = output[0];
-			toBeSorted = output[1];
-
-			output = this.merge_sort(updatedState, toBeSorted, temp, mid+1, right);
-			updatedState = output[0];
-			toBeSorted = output[1];
-
-
-			return this.merge_sort_helper(updatedState, toBeSorted, temp, left, mid, right);
-		}else{
-			return [updatedState, toBeSorted]
-		}
-	}
-	
-	renderMergeSort(output_array){
-		var toBeSorted = this.state.array.slice();
-		var updatedState = output_array;
-
-		var temp = [0, 0, 0, 0, 0, 
-					0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0];
-		
-		var output = this.merge_sort(updatedState, toBeSorted, temp, 0, temp.length-1);
-		
-		updatedState = output[0];
-		toBeSorted = output[1];
-
-		return updatedState;
-	}
-
-	heapify(updatedState, inputarray, size, index){
-		
-		var largest = index;
-		var left = index*2 + 1;
-		var right = index*2 + 2;
-		
-		if ((left < size) && (inputarray[index] < inputarray[left])){
-			largest = left;
-		}
-		if ((right < size) && (inputarray[largest] < inputarray[right])){
-			largest = right;
-		}
-		if (largest !== index){
-			
-			var a = inputarray[index];
-			var b = inputarray[largest];
-
-			inputarray[index] = b;
-			inputarray[largest] = a;
-			
-			this.heapify(updatedState, inputarray, size, largest);
-		}
-
-		var test = [];
-		var k = 0;
-		for (k=0; k<inputarray.length; k++){
-			var j = inputarray[k]*30;
-			test.push(this.renderBar(j));
-		}
-		updatedState.push(test);
-
-		return [updatedState, inputarray];
-
-	}
-
 	renderHeapSort(output_array){
 		
 		var toBeSorted = this.state.array.slice();
-		var updatedState = output_array;
+		var heapOutput = performHeapSort(toBeSorted);
+		var updatedState = [], tempArray = [];
 
-		var n = toBeSorted.length;
-		var start = Math.floor(n/2);
-		
-		var i =0;
-		for (i = start-1; i > -1; i--){
-			var output = this.heapify(updatedState, toBeSorted, n, i);
-			updatedState = output[0];
-			toBeSorted = output[1];
-		}
-
-		for (i = n-1; i > 0; i--){
-			var a = toBeSorted[i];
-			var b = toBeSorted[0];
-
-			toBeSorted[i] = b;
-			toBeSorted[0] = a;
-
-			var output = this.heapify(updatedState, toBeSorted, i, 0);
-			updatedState = output[0];
-			toBeSorted = output[1];
-
+		for (var i=0; i< heapOutput.length; i++){		
+			tempArray = [];
+			for (var j=0; j< (heapOutput[i]).length; j++){
+				tempArray.push(this.renderBar(heapOutput[i][j] * 30));	
+			}
+			updatedState.push(tempArray);
 		}
 		return updatedState;
 	}
@@ -238,9 +118,10 @@ class EverythingGrid extends React.Component {
 		const array = [7, 11, 8, 16, 17, 
 					19, 5, 13, 4, 7, 
 					12, 3, 15, 9, 2, 
-					18, 16, 1, 5, 8, 
-					12, 14, 18, 9, 3, 
+					18, 16, 1, 5, 8,
+					12, 14, 18, 9, 3,
 					6, 7, 2, 10, 4];
+					
 		const html = [this.renderBar(210), this.renderBar(330), this.renderBar(240), this.renderBar(480), this.renderBar(510),
 					this.renderBar(570), this.renderBar(150), this.renderBar(390), this.renderBar(120), this.renderBar(210), 
 					this.renderBar(360), this.renderBar(90), this.renderBar(450), this.renderBar(270), this.renderBar(60), 
@@ -260,13 +141,13 @@ class EverythingGrid extends React.Component {
 	handleClick(type){
 
 		var output_array = [];
-		output_array.push(this.state.html);
-		
+				
 		if (type == "Insertion Sort"){
-			output_array = this.renderInsertionSort(output_array);
+			output_array = this.renderInsertionSort();
 		} else if (type == "Merge Sort"){
 			output_array = this.renderMergeSort(output_array);
 		} else if (type == "Reset"){
+			output_array.push(this.state.html);
 			this.renderReset();
 		} else{
 			output_array = this.renderHeapSort(output_array);
