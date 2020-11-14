@@ -5,6 +5,13 @@ import { performInsertionSort } from "./insertionSort.js";
 import { performMergeSort } from "./mergeSort.js";
 import { performHeapSort } from "./heapSort.js";
 
+/*
+Name: SortButton
+Description : This class supports a react component for the buttons used in 
+			sorting and reset.
+			All buttons "Insertion Sort", "Merge Sort", "Heap Sort" and "Reset"
+			use this class as a React Component
+*/
 class SortButton extends React.Component{
 	render(){
 		return (
@@ -16,7 +23,15 @@ class SortButton extends React.Component{
 		);
 	}
 }
-
+//
+/*
+Name: Bar
+Description: This class serves as the react component for the each individual bar
+			in the displayed chart used to visualize sorting.
+			This class further impletements the color gradient used in the bars. 
+			It takes the height as input of the bar and bases the color on height,
+			higher the bar, darker the color.
+*/
 class Bar extends React.Component{
 	render(){
 
@@ -37,104 +52,86 @@ class Bar extends React.Component{
 		);
 	}
 }
-
+//
+/*
+Name: EverythingGrid
+Description: This class, as the name suggests, serves as a base for almost everything.
+			This is where rendering in react starts. It contains all the web-elements,
+			uses above classes, and further calls additional class for different types
+			of sorting.
+*/
 class EverythingGrid extends React.Component {
 
 	constructor(props) {
-		super(props);
-		this.state = {
-			array: [7, 11, 8, 16, 17, 
-					19, 5, 13, 4, 7, 
-					12, 3, 15, 9, 2, 
-					18, 16, 1, 5, 8, 
-					12, 14, 18, 9, 3, 
-					6, 7, 2, 10, 4],
 		
-			html: [this.renderBar(210), this.renderBar(330), this.renderBar(240), this.renderBar(480), this.renderBar(510),
-					this.renderBar(570), this.renderBar(150), this.renderBar(390), this.renderBar(120), this.renderBar(210), 
-					this.renderBar(360), this.renderBar(90), this.renderBar(450), this.renderBar(270), this.renderBar(60), 
-					this.renderBar(540), this.renderBar(480), this.renderBar(30), this.renderBar(150), this.renderBar(240), 
-					this.renderBar(360), this.renderBar(420), this.renderBar(540), this.renderBar(270), this.renderBar(90),
-					this.renderBar(180), this.renderBar(210), this.renderBar(60), this.renderBar(300), this.renderBar(120)],
+		super(props);
+		var randomArray = this.randomArray();
+		var randomHtml = this.convertArrayToReactArray(randomArray);
+		var randomOutputArray = [randomHtml];
 
-			output_array: [[this.renderBar(210), this.renderBar(330), this.renderBar(240), this.renderBar(480), this.renderBar(510),
-					this.renderBar(570), this.renderBar(150), this.renderBar(390), this.renderBar(120), this.renderBar(210), 
-					this.renderBar(360), this.renderBar(90), this.renderBar(450), this.renderBar(270), this.renderBar(60), 
-					this.renderBar(540), this.renderBar(480), this.renderBar(30), this.renderBar(150), this.renderBar(240), 
-					this.renderBar(360), this.renderBar(420), this.renderBar(540), this.renderBar(270), this.renderBar(90),
-					this.renderBar(180), this.renderBar(210), this.renderBar(60), this.renderBar(300), this.renderBar(120)]],
+		this.state = {
+			array: randomArray,
+			html: randomHtml,
+			output_array: randomOutputArray,
 		};
 	}
-	
+	randomArray(){
+		return Array.from({length: 30}, () => Math.floor(Math.random() * 20));
+	}
+
+	convertArrayToReactArray(inputArray){
+		var outputArray = [];
+		for (var i=0; i< inputArray.length; i++){
+			outputArray.push(this.renderBar(inputArray[i]*30));
+		}
+		return outputArray;
+	}
+
 	renderInsertionSort(){
 
 		var insertionOutput = performInsertionSort(this.state.array.slice());
 		var updatedState = [], tempArray = [];
 
 		for (var i=0; i< insertionOutput.length; i++){	
-			tempArray = [];
-			for (var j=0; j< (insertionOutput[i]).length; j++){
-				tempArray.push(this.renderBar(insertionOutput[i][j] * 30));	
-			}
+			
+			tempArray = this.convertArrayToReactArray(insertionOutput[i]);
 			updatedState.push(tempArray);
 		}
 		return updatedState;
 	}
 	
-	renderMergeSort(output_array){
+	renderMergeSort(){
 		
 		var toBeSorted = this.state.array.slice();
 		var mergeOutput = performMergeSort(toBeSorted);
 		var updatedState = [], tempArray = [];
 
 		for (var i=0; i< mergeOutput.length; i++){	
-			tempArray = [];
-			for (var j=0; j< (mergeOutput[i]).length; j++){
-				tempArray.push(this.renderBar(mergeOutput[i][j] * 30));	
-			}
+			tempArray = this.convertArrayToReactArray(mergeOutput[i]);
 			updatedState.push(tempArray);
 		}
 		return updatedState;
 	}
 
-	renderHeapSort(output_array){
+	renderHeapSort(){
 		
 		var toBeSorted = this.state.array.slice();
 		var heapOutput = performHeapSort(toBeSorted);
 		var updatedState = [], tempArray = [];
 
 		for (var i=0; i< heapOutput.length; i++){		
-			tempArray = [];
-			for (var j=0; j< (heapOutput[i]).length; j++){
-				tempArray.push(this.renderBar(heapOutput[i][j] * 30));	
-			}
+			tempArray = this.convertArrayToReactArray(heapOutput[i]);
 			updatedState.push(tempArray);
 		}
 		return updatedState;
 	}
 
 	renderReset(){
-		
-		const array = [7, 11, 8, 16, 17, 
-					19, 5, 13, 4, 7, 
-					12, 3, 15, 9, 2, 
-					18, 16, 1, 5, 8,
-					12, 14, 18, 9, 3,
-					6, 7, 2, 10, 4];
-					
-		const html = [this.renderBar(210), this.renderBar(330), this.renderBar(240), this.renderBar(480), this.renderBar(510),
-					this.renderBar(570), this.renderBar(150), this.renderBar(390), this.renderBar(120), this.renderBar(210), 
-					this.renderBar(360), this.renderBar(90), this.renderBar(450), this.renderBar(270), this.renderBar(60), 
-					this.renderBar(540), this.renderBar(480), this.renderBar(30), this.renderBar(150), this.renderBar(240), 
-					this.renderBar(360), this.renderBar(420), this.renderBar(540), this.renderBar(270), this.renderBar(90),
-					this.renderBar(180), this.renderBar(210), this.renderBar(60), this.renderBar(300), this.renderBar(120)];
 
-		const output_array = [[this.renderBar(210), this.renderBar(330), this.renderBar(240), this.renderBar(480), this.renderBar(510),
-					this.renderBar(570), this.renderBar(150), this.renderBar(390), this.renderBar(120), this.renderBar(210), 
-					this.renderBar(360), this.renderBar(90), this.renderBar(450), this.renderBar(270), this.renderBar(60), 
-					this.renderBar(540), this.renderBar(480), this.renderBar(30), this.renderBar(150), this.renderBar(240), 
-					this.renderBar(360), this.renderBar(420), this.renderBar(540), this.renderBar(270), this.renderBar(90),
-					this.renderBar(180), this.renderBar(210), this.renderBar(60), this.renderBar(300), this.renderBar(120)]];
+		var array = this.randomArray();
+		var html = this.convertArrayToReactArray(array);
+		var output_array = [html];
+		
 		this.setState({array: array, html: html, output_array:output_array,});
 	}
 
@@ -145,12 +142,12 @@ class EverythingGrid extends React.Component {
 		if (type == "Insertion Sort"){
 			output_array = this.renderInsertionSort();
 		} else if (type == "Merge Sort"){
-			output_array = this.renderMergeSort(output_array);
+			output_array = this.renderMergeSort();
 		} else if (type == "Reset"){
 			output_array.push(this.state.html);
 			this.renderReset();
 		} else{
-			output_array = this.renderHeapSort(output_array);
+			output_array = this.renderHeapSort();
 		}
 		this.setState({output_array: output_array,});
 	}
