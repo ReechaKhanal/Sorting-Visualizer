@@ -62,31 +62,46 @@ Description: This class, as the name suggests, serves as a base for almost every
 */
 class EverythingGrid extends React.Component {
 
+	/* constructor for EverythingGrid
+	   constructor defines three state variables:
+	   		* array: randomly generated array
+	   		* html: array converted to a array of react components
+	   		* output_array: array optimized for display
+	*/
 	constructor(props) {
 		
 		super(props);
-		var randomArray = this.randomArray();
-		var randomHtml = this.convertArrayToReactArray(randomArray);
-		var randomOutputArray = [randomHtml];
 
+		var randomArray = this.randomArray(); // random array generator function
+		// converting the integer array to a react component array for rendering sake
+		var randomHtml = this.convertArrayToReactArray(randomArray);
+		var randomOutputArray = [randomHtml]; // array optimized into two dimensional array for display purposes
+
+		// setting the three state variables with our generated value
 		this.state = {
 			array: randomArray,
 			html: randomHtml,
-			output_array: randomOutputArray,
+			outputArray: randomOutputArray,
 		};
 	}
+
+	// random array generator function
 	randomArray(){
+		// generates array of length 30, with random integers from 0 to 20
 		return Array.from({length: 30}, () => Math.floor(Math.random() * 20));
 	}
 
+	// converts the provided integer array to an array of react components.
 	convertArrayToReactArray(inputArray){
-		var outputArray = [];
+		var output = [];
+		// returns an array with "this.renderBar" added in front of each element of the integer array
 		for (var i=0; i< inputArray.length; i++){
-			outputArray.push(this.renderBar(inputArray[i]*30));
-		}
-		return outputArray;
+			output.push(this.renderBar(inputArray[i]*30));
+		} 
+		return output; // array of react components
 	}
 
+	// function to start Insertion Sort
 	renderInsertionSort(){
 
 		var insertionOutput = performInsertionSort(this.state.array.slice());
@@ -100,6 +115,7 @@ class EverythingGrid extends React.Component {
 		return updatedState;
 	}
 	
+	// function to start Merge Sort
 	renderMergeSort(){
 		
 		var toBeSorted = this.state.array.slice();
@@ -113,6 +129,7 @@ class EverythingGrid extends React.Component {
 		return updatedState;
 	}
 
+	// function to start Heap Sort
 	renderHeapSort(){
 		
 		var toBeSorted = this.state.array.slice();
@@ -126,30 +143,32 @@ class EverythingGrid extends React.Component {
 		return updatedState;
 	}
 
+	// Reset Function to reset the display to a new array.
 	renderReset(){
 
 		var array = this.randomArray();
 		var html = this.convertArrayToReactArray(array);
-		var output_array = [html];
+		var outputArray = [html];
 		
-		this.setState({array: array, html: html, output_array:output_array,});
+		this.setState({array: array, html: html, outputArray:outputArray,});
 	}
 
+	// Function to choose the sort-type based on button selection
 	handleClick(type){
 
-		var output_array = [];
+		var outputArray = [];
 				
 		if (type == "Insertion Sort"){
-			output_array = this.renderInsertionSort();
+			outputArray = this.renderInsertionSort();
 		} else if (type == "Merge Sort"){
-			output_array = this.renderMergeSort();
+			outputArray = this.renderMergeSort();
 		} else if (type == "Reset"){
-			output_array.push(this.state.html);
+			outputArray.push(this.state.html);
 			this.renderReset();
 		} else{
-			output_array = this.renderHeapSort();
+			outputArray = this.renderHeapSort();
 		}
-		this.setState({output_array: output_array,});
+		this.setState({outputArray: outputArray,});
 	}
 
 	renderButton(type){
@@ -166,7 +185,7 @@ class EverythingGrid extends React.Component {
 		const welcome = "Sorting Visualizer";
 		
 		const Text = () => {
-  			var work = this.state.output_array.slice();
+  			var work = this.state.outputArray.slice();
   			const [seconds, setSeconds] = useState(0);
   			useEffect(() => {
     			const interval = setInterval(() => {
