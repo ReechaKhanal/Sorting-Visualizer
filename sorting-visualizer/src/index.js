@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom';
 import './index.css';
 import React, { useState, useEffect } from "react";
-import { performInsertionSort } from "./insertionSort.js";
-import { performMergeSort } from "./mergeSort.js";
-import { performHeapSort } from "./heapSort.js";
+import { performInsertionSort } from "./sorting-codes/insertionSort.js";
+import { performMergeSort } from "./sorting-codes/mergeSort.js";
+import { performHeapSort } from "./sorting-codes/heapSort.js";
 
 /*
 Name: SortButton
