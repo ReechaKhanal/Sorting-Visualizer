@@ -6,7 +6,17 @@ Welcome to my sorting visualizer in React. Look at the demo below to get an idea
 
 This sorting visualizer is unique in that it uses REACT, the visualizer looks like below:
 
-![](Sorting_Visualizer.gif)
+### Insertion Sort
+![](Insertion_Sort.gif)
+
+### Merge Sort
+![](Merge_sort_GIF.gif)
+
+### Heap Sort
+![](Heap_sort_GIF.gif)
+
+### Reset Button
+![](Reset_GIF.gif)
 
 You can select between "Insertion Sort", "Merge Sort", and "Heap Sort" to see how each type of sorting works.
 
