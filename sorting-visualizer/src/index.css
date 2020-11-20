@@ -21,7 +21,7 @@
 }
 
 .sort-types{
-	left: 25%;
+	left: 30%;
 	position:absolute;
 }
 
@@ -32,7 +32,7 @@
 .all-bars{
 	margin-top: 15px;
 	position: absolute;
-	left:22%;
+	left:27%;
 }
 
 * {background-color: #f2f2f2}
