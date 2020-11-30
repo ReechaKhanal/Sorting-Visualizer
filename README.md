@@ -20,4 +20,4 @@ This sorting visualizer is unique in that it uses REACT, the visualizer looks li
 
 You can select between "Insertion Sort", "Merge Sort", and "Heap Sort" to see how each type of sorting works.
 
-This app is deployed on : [TBA]
+This app is deployed on : https://reechakhanal.github.io/react-sorting-visualizer-web/
