@@ -1,3 +1,5 @@
+Deployed Application : https://reechakhanal.github.io/react-sorting-visualizer-web/
+
 # Sorting Visualizer in REACT:
 
 Welcome to my sorting visualizer in React. Look at the demo below to get an idea of what this project is about.
@@ -20,4 +22,4 @@ This sorting visualizer is unique in that it uses REACT, the visualizer looks li
 
 You can select between "Insertion Sort", "Merge Sort", and "Heap Sort" to see how each type of sorting works.
 
-This app is deployed on : https://reechakhanal.github.io/react-sorting-visualizer-web/
+Deployed Application : https://reechakhanal.github.io/react-sorting-visualizer-web/
