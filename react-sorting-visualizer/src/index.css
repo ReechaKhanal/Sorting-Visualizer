@@ -11,18 +11,20 @@
 	margin-left: 5px;
 	margin-right: 5px;
 	background: #0000;
-	border: 3px solid #999;
+	border: 1px solid #999;
 	font-size: 20px;
 	font-weight: bold;
 	text-align: center;
 	width: 175px;
 	background-color: #008CBA;
 	color: white;
+
 }
 
 .sort-types{
-	left: 30%;
-	position:absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .bar1{
@@ -30,9 +32,10 @@
 }
 
 .all-bars{
+	display: flex;
 	margin-top: 15px;
-	position: absolute;
-	left:27%;
+	justify-content: center;
+	align-items: center;
 }
 
 * {background-color: #f2f2f2}
